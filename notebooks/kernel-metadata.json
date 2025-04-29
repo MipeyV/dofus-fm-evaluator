@@ -1,0 +1,10 @@
+{
+    "id": "mipeyv/fm-item-classification-model-dofus",
+    "title": "FM Item Classification Model DOFUS",
+    "code_file": "fm-item-classification-model-dofus.ipynb",
+    "language": "python",
+    "kernel_type": "notebook",
+    "is_private": true,
+    "enable_gpu": true,
+    "enable_internet": false
+  }  
