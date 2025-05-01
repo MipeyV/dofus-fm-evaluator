@@ -24,9 +24,8 @@ Projet de machine learning pour évaluer la qualité de jets d'items dans le jeu
 
 ---
 
-## Structure du projet
+## 🗂️ Structure du projet
 
-```
 dofus-fm-evaluator/
 ├── src/
 │   ├── ocr/
@@ -43,16 +42,13 @@ dofus-fm-evaluator/
 ├── requirements.txt            # Dépendances Python
 ├── README.md                   # Ce fichier
 └── .venv/                      # (Optionnel) Environnement virtuel
-```
-  
-## Installation
+
+    ## 🚀 Installation
 
 ### 1. Cloner le dépôt
 
-```
+```bash
 git clone https://github.com/ton-utilisateur/dofus-fm-evaluator.git
-```
-```
 cd dofus-fm-evaluator
 ```
 
@@ -61,14 +57,11 @@ cd dofus-fm-evaluator
 ```
 python -m venv .venv
 ```
-Activer son environnement virtuel
 
-- Windows :
-```
+```Activer son environnement virtuel
+# Windows :
 .\.venv\Scripts\activate
-```
-- Linux/macOS :
-```
+# Linux/macOS :
 source .venv/bin/activate
 ```
 
@@ -78,32 +71,31 @@ pip install -r requirements.txt
 ```
 ### 4. Installer et configurer Tesseract OCR
 
-- Ce projet utilise Tesseract pour extraire le texte des captures d’écran.
+Ce projet utilise Tesseract pour extraire le texte des captures d’écran.
 
 Étapes :
-- Télécharger Tesseract :
-  https://github.com/tesseract-ocr/tesseract
+Télécharger Tesseract :
+https://github.com/tesseract-ocr/tesseract
 
-- Installer Tesseract (par défaut dans C:\Program Files\Tesseract-OCR sur Windows)
+Installer Tesseract (par défaut dans C:\Program Files\Tesseract-OCR sur Windows)
 
-- Ajouter le chemin d’installation à ta variable d’environnement PATH :
+Ajouter le chemin d’installation à ta variable d’environnement PATH :
 
-- Ouvrir les Variables d’environnement
+Ouvrir les Variables d’environnement
 
-- Modifier la variable Path
+Modifier la variable Path
 
-- Ajouter : C:\Program Files\Tesseract-OCR
+Ajouter : C:\Program Files\Tesseract-OCR
 
-- Vérifier dans un terminal :
+Vérifier dans un terminal :
 
 ```
 tesseract --version
 ```
-- (Optionnel mais recommandé) Télécharger le fichier ```fra.traineddata``` si tu veux utiliser la langue française :
+(Optionnel mais recommandé) Télécharger le fichier fra.traineddata si tu veux utiliser la langue française :
 https://github.com/tesseract-ocr/tessdata/blob/main/fra.traineddata
-- Place-le dans :
-```
+Place-le dans :
 C:\Program Files\Tesseract-OCR\tessdata\
-```
+
 ## Auteur
 MipeyV
