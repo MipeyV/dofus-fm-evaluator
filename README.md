@@ -97,5 +97,8 @@ https://github.com/tesseract-ocr/tessdata/blob/main/fra.traineddata
 Place-le dans :
 C:\Program Files\Tesseract-OCR\tessdata\
 
+## A faire / améliorer
+Pour l'instant mon OCR ne permet pas encore de lire toutes les informations de mes screens de tests, je dois réduire le bruit du signal et pouvoir parser correctement les valeurs.
+
 ## Auteur
 MipeyV
