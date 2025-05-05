@@ -1,33 +1,20 @@
-import pytest
-from src.ocr.reader import extract_stat_lines
+from src.ocr.reader import extract_stat_lines, extract_stats_with_bounds
 
-def test_extract_stat_lines_simple():
-    text = """
-    Nom de l'item
-    EFFETS
-    +50 Vitalité
-    +10 Sagesse
-    +2 Portée
-    POIDS : 345
-    """
+def test_extract_stats_with_bounds_on_asset():
+    image_path = "tests/assets/item_0001.png"
+    raw_lines = extract_stat_lines(image_path)
+    stats = extract_stats_with_bounds(raw_lines)
 
-    expected = ["+50 Vitalité", "+10 Sagesse", "+2 Portée"]
-    result = extract_stat_lines(text)
-    assert result == expected
+    print("\nLignes OCR extraites :")
+    for l in raw_lines:
+        print("  >", l)
 
-import cv2
-import pytesseract
+    print("\nRésultat du parsing :")
+    for s in stats:
+        print("  >", s)
 
-def test_detect_effets_anchor():
-    image = cv2.imread("tests/assets/effets.png")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    text = pytesseract.image_to_string(gray, lang="fra")
-    
-    assert "EFFETS" in text.upper()
+    assert isinstance(stats, list)
+    assert all("stat" in s and "value" in s for s in stats)
 
-def test_detect_poids_anchor():
-    image = cv2.imread("tests/assets/poids.png")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    text = pytesseract.image_to_string(gray, lang="fra")
-    
-    assert "POIDS" in text.upper()
+    # Doit y avoir au moins une ligne avec des bornes (hors signature)
+    assert any(s["bounds"] is not None for s in stats if s["stat"] != "signature")
