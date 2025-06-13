@@ -24,7 +24,7 @@ Projet de machine learning pour évaluer la qualité de jets d'items dans le jeu
 
 ---
 
-    ## 🚀 Installation
+## Installation
 
 ### 1. Cloner le dépôt
 
@@ -73,9 +73,9 @@ Vérifier dans un terminal :
 ```
 tesseract --version
 ```
-(Optionnel mais recommandé) Télécharger le fichier fra.traineddata si tu veux utiliser la langue française :
+(Optionnel mais recommandé) Télécharger le fichier fra.traineddata pour utiliser la langue française :
 https://github.com/tesseract-ocr/tessdata/blob/main/fra.traineddata
-Place-le dans :
+Placer-le dans :
 C:\Program Files\Tesseract-OCR\tessdata\
 
 ## A faire / améliorer
