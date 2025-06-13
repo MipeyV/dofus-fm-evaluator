@@ -38,19 +38,22 @@ cd dofus-fm-evaluator
 ```
 python -m venv .venv
 ```
+### 3. Activer son environnement virtuel
 
-```Activer son environnement virtuel
-# Windows :
+- Windows :
+```
 .\.venv\Scripts\activate
-# Linux/macOS :
+```
+- Linux/macOS :
+```
 source .venv/bin/activate
 ```
 
-### 3. Installer les dépendances de python
+### 4. Installer les dépendances de python
 ```
 pip install -r requirements.txt
 ```
-### 4. Installer et configurer Tesseract OCR
+### 5. Installer et configurer Tesseract OCR
 
 Ce projet utilise Tesseract pour extraire le texte des captures d’écran.
 
