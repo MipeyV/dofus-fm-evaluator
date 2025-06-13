@@ -24,25 +24,6 @@ Projet de machine learning pour évaluer la qualité de jets d'items dans le jeu
 
 ---
 
-## 🗂️ Structure du projet
-
-dofus-fm-evaluator/
-├── src/
-│   ├── ocr/
-│   │   └── reader.py           # OCR & détection des lignes dans une image
-│   └── model/
-│       └── predictor.py        # Entraînement & prédiction avec RandomForest
-├── data/
-│   ├── raw/                    # Captures d'écran brutes
-│   └── processed/              # Jeux de données CSV générés
-├── models/
-│   └── saved_model.joblib      # Modèle entraîné sauvegardé
-├── tests/
-│   └── test_reader.py          # Tests unitaires OCR
-├── requirements.txt            # Dépendances Python
-├── README.md                   # Ce fichier
-└── .venv/                      # (Optionnel) Environnement virtuel
-
     ## 🚀 Installation
 
 ### 1. Cloner le dépôt
