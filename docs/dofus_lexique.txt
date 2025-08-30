@@ -1,0 +1,15 @@
+ITEM : Equipement du jeu
+PANOPLIE : Ensemble d'équipements formant une famille (panoplie) qui confère des bonus qui varient selon le nombre d'items équipé d'une même panoplie
+PANO : Diminutif de "Panoplie", famille ou ensemble d'équipements conférant des bonus supplémentaires si plusieurs d'entre eux sont équipés.
+FORGEMAGIE : Activité du jeu qui consiste à modifier les caractéristique d'un item afin de les améliorer.
+FORGEMAGER : Faire de la forgemagie
+EXO : Ajout d’une caractéristique absente de base sur un item (exemple : exo PA, exo PM, exo PO). Issu du sens de Forgemagie Exotique, lors de la forgmagie, il y a 1 chance sur 100 d'obtenir un "exo", ce qui en fait quelque chose de rare et de prisé mais, cela confère des caractéristique majeures supplémentaires.
+OVER : Augmentation d’une caractéristique au-delà de son maximum naturel.
+PUITS : Points laissés par des runes retirées, utilisés pour équilibrer la forgemagie. Autre appélation : Poids des runes.
+TOLÉRÉ : Statistique en dessous de sa valeur max, mais considérée encore acceptable.
+MÉTA : Stratégie généralement acceptée par la communauté. Cette stratégie est considérée comme la meilleure façon de gagner ou d'obtenir les meilleures performances dans une tâche spécifique. Certains ont défini « méta » comme un acronyme signifiant « tactiques les plus efficaces disponibles ».
+TANK : Rôle dans l'équipe qui consiste à bloquer les ennemis et encaisser leurs attaques.
+TANKER : Encaisser des coups des ennemis
+TANKINESS : Capacité à pouvoir encaisser les coups
+ROXX : Rôle dans l'équipe qui consiste à faire un maximum de dégats aux ennemis pour les tuer vite.
+ROXXER : Frapper l'ennemi

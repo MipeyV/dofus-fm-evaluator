@@ -1,11 +1,17 @@
 import numpy as np
-from src.config.stat_pool import stat_pool
+from src.config.stat_pool import (
+    StatDefinition,  # déjà défini dans stat_pool.py
+    stat_pool, essential_stats, basic_stats, secondary_stats, heavy_stats,
+    résistance_elem_stats, résistance_pourcent_stats, dommage_elem_stats, dommage_pourcent_stats
+)
+
 
 class ItemTemplate:
-    def __init__(self, name, stats, pui_category="moyen"):
+    def __init__(self, name, stats, pui_category=None):
         self.name = name
         self.stats = stats
-        self.pui_category = pui_category
+        # si non fourni, on calcule automatiquement
+        self.pui_category = pui_category or self.compute_pui_category()
 
     def get_stat_max(self, stat_name):
         return self.stats.get(stat_name).max_value if stat_name in self.stats else 0
@@ -15,7 +21,17 @@ class ItemTemplate:
 
     def has_stat(self, stat_name):
         return stat_name in self.stats
-    
+
+    def compute_pui_category(self):
+        """Catégorise l’item en fonction de son poids total max"""
+        total_weight = sum(sd.max_value * sd.weight for sd in self.stats.values())
+        if total_weight > 1000:
+            return "grand"
+        elif total_weight > 400:
+            return "moyen"
+        return "faible"
+
+
 class ItemInstance:
     def __init__(self, template, current_stats, label=None):
         self.template = template
@@ -72,7 +88,8 @@ class ItemInstance:
         nb_overs = sum(1 for stat in self.template.stats if self.is_over(stat))
         total_weight = self.get_total_weight()
         exo_weight = self.get_exo_weight()
-        avg_ratio = np.nanmean([self.get_ratio(stat) for stat in self.template.stats])
+        ratios = [self.get_ratio(stat) for stat in self.template.stats]
+        avg_ratio = np.nanmean(ratios) if ratios else 0.0
         over_weight = sum(
             (self.current_stats[stat] - self.template.get_stat_max(stat)) * self.template.get_stat_weight(stat)
             for stat in self.template.stats
@@ -112,80 +129,68 @@ class ItemInstance:
         }
 
     def evaluate_quality_algo(self):
-        def stat_is_perfect(stat):
-            return self.current_stats.get(stat, 0) == self.template.get_stat_max(stat)
-
-        def stat_is_within_tolerance(stat):
-            if stat not in stat_pool:
-                return True
-            max_val = self.template.get_stat_max(stat)
-            val = self.current_stats.get(stat, 0)
-            base_weight = stat_pool[stat].weight
-            if max_val == 0:
-                return True
-            diff = abs(max_val - val)
-            line_weight = max_val * base_weight
-            if line_weight <= 30:
-                return diff <= 1
-            elif line_weight <= 60:
-                return diff <= 3
-            else:
-                return diff <= 10
-
         stats = self.template.stats
         n_stats = len(stats)
 
-        perfect_lines = sum(stat_is_perfect(stat) for stat in stats)
-        high_ratios = sum(1 for stat in stats if 0.9 <= self.get_ratio(stat) < 1)
+        perfect_lines = sum(self.current_stats.get(stat, 0) == self.template.get_stat_max(stat) for stat in stats)
         ratio_perfect = perfect_lines / n_stats if n_stats else 0
 
-        total_weight = self.get_total_weight()
-        exo_weight = self.get_exo_weight()
+        exo = self.get_exo_weight() > 0
         over = any(self.is_over(stat) for stat in stats)
-        exo = exo_weight > 0
 
-        pui = self.template.pui_category
-        note = 100
-        malus = 0
-
-        # Malus sur les essential stats non parfaites
-        for stat in essential_stats:
-            if stat in stats and self.get_ratio(stat) < 1:
-                malus += 20
-
-        # Malus si résistances pas parfaites
-        for stat in résistance_elem_stats.union(résistance_pourcent_stats):
-            if stat in stats and self.get_ratio(stat) < 1:
-                malus += 10
-
-        # Tolérances pour les autres lignes
-        for stat in stats:
-            if stat in essential_stats or stat not in stat_pool:
-                continue
-            if not stat_is_within_tolerance(stat):
-                malus += 5
-
-        # Bonus si très bon jet
-        if malus < 10 and ratio_perfect > 0.8:
-            note = 100
+        if ratio_perfect > 0.9:
             quality = "parfait"
-        elif malus < 25 and all(
-            (stat not in stats or self.get_ratio(stat) == 1)
-            for stat in essential_stats.union(résistance_pourcent_stats, résistance_elem_stats)
-        ):
-            note = max(85, 100 - malus)
+        elif ratio_perfect > 0.7:
             quality = "très bon jet"
         elif all(self.get_ratio(stat) >= 0.6 for stat in stats if stat in stat_pool):
-            note = max(60, 100 - malus)
-            quality = "jet craft"
+            quality = "bon"
         else:
-            note = max(30, 100 - malus)
-            quality = "jet nul"
+            quality = "nul"
 
         return {
-            "note": note,
+            "quality": quality,
             "exo": exo,
             "over": over,
-            "puit": pui,
-            "quality": quality
+            "puit": self.template.pui_category
         }
+
+class ItemMetadata:
+    def __init__(self, name="Inconnu", level="?", type_name="?", set_name=None):
+        self.name = name
+        self.level = level
+        self.type_name = type_name
+        self.set_name = set_name
+
+    def __repr__(self):
+        return f"<ItemMetadata name={self.name}, lvl={self.level}, type={self.type_name}, set={self.set_name}>"
+    
+
+class Item:
+    def __init__(self, metadata: ItemMetadata, instance: ItemInstance):
+        self.metadata = metadata
+        self.instance = instance
+
+    @property
+    def template(self) -> ItemTemplate:
+        return self.instance.template
+
+    def summary(self) -> dict:
+        """
+        Renvoie un résumé pratique de l’item :
+        - Métadonnées
+        - Features calculées
+        - Évaluation de qualité
+        """
+        return {
+            "metadata": {
+                "name": self.metadata.name,
+                "level": self.metadata.level,
+                "type": self.metadata.type_name,
+                "set": self.metadata.set_name,
+            },
+            "features": self.instance.get_features(),
+            "evaluation": self.instance.evaluate_quality_algo(),
+        }
+
+    def __repr__(self):
+        return f"<Item {self.metadata.name} (lvl {self.metadata.level}) | {self.instance.evaluate_quality_algo()}>"

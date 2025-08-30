@@ -16,5 +16,4 @@ def test_extract_stats_with_bounds_on_asset():
     assert isinstance(stats, list)
     assert all("stat" in s and "value" in s for s in stats)
 
-    # Doit y avoir au moins une ligne avec des bornes (hors signature)
     assert any(s["bounds"] is not None for s in stats if s["stat"] != "signature")

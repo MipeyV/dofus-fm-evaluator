@@ -52,7 +52,11 @@ stat_pool = {
     "dommage_mêlee_%" : StatDefinition("dommage_mêlee_%", 0, 5, weight=15),
     "résistance_dist_%" : StatDefinition("résistance_dist_%", 0, 5, weight=15),
     "résistance_sort_%" : StatDefinition("résistance_sort_%", 0, 5, weight=15),
-    "résistance_melee_%" : StatDefinition("résistance_melee_%", 0, 5, weight=15)
+    "résistance_melee_%" : StatDefinition("résistance_melee_%", 0, 5, weight=15),
+    "esquive_pa" : StatDefinition("esquive_pa", 0, 15, weight=7),
+    "esquive_pm" : StatDefinition("esquive_pm", 0, 15, weight=7),
+    "retrait_pa" : StatDefinition("retrait_pa", 0, 15, weight=7),
+    "retrait_pm" : StatDefinition("retrait_pm", 0, 15, weight=7),
 }
 
 essential_stats = {
@@ -96,4 +100,12 @@ dommage_elem_stats = {
 
 dommage_pourcent_stats = {
     "dommage_mêlée_%", "dommage_dist_%", "dommage_sort_%"
+}
+
+esquive_stats = {
+    "esquive_pa", "esquive_pm"
+}
+
+retrait_stats = {
+    "retrait_pa", "retrait_pm"
 }
