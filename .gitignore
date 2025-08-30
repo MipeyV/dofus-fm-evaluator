@@ -31,5 +31,5 @@ results/
 tmp/
 
 # === Modèles et poids ===
-models/*.job
+models/*.joblib
 rag_dofus/bccb9185-c8c7-488f-a64c-c5f73a5842d8
